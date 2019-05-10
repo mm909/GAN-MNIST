@@ -134,9 +134,10 @@ int main() {
   {
     printf("+---------------+\n");
     printf(" Normalizing Data... \r");
+    double average = 0; double sd = 0;
     for (size_t j = 0; j < ROWS; j++) {
       for (size_t k = 0; k < COLS; k++) {
-        double average = 0; double sd = 0;
+        average = 0; sd = 0;
         for (size_t i = 0; i < TRAINING; i++) {
           average += TRP[i][j][k];
         }
@@ -152,20 +153,6 @@ int main() {
         }
         TRA[j][k] = average;
         TRD[j][k] = sd;
-        average = 0; sd = 0;
-        for (size_t i = 0; i < TESTING; i++) {
-          average += TEP[i][j][k];
-        }
-        average /= TESTING;
-        for (size_t i = 0; i < TESTING; i++) {
-          sd += (TEP[i][j][k] - average) * (TEP[i][j][k] - average);
-        }
-        sd /= (TESTING - 1);
-        sd = sqrt(sd);
-        for (size_t i = 0; i < TESTING; i++) {
-          if(sd == 0) TEP[i][j][k] = 0;
-          else TEP[i][j][k] = (TEP[i][j][k] - average) / sd;
-        }
       }
     }
     printf("|Normalized Data|     \n");
